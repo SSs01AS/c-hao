@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>陈好专属点餐</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *{font-family:"微软雅黑",sans-serif;}
+        .card-round{border-radius:18px;overflow:hidden;box-shadow:0 3px 12px #00000015;}
+        .menu-item{transition:0.25s all;cursor:pointer;padding:8px 6px;border-radius:8px;margin:3px 0;}
+        .menu-item:hover{background:#fef0e6;transform:translateX(3px);}
+        .active-menu{background:#ffe8d6;color:#ff6b6b;font-weight:bold;border-left:3px solid #ff6b6b;padding-left:8px;}
+        /* 改进移动端体验 */
+        .content-box img { max-width: 100%; height: auto; margin: 0 auto; display: block; object-fit: cover; }
+        .menu-item:active { transform: scale(0.97); background: #ffe0cc; }
+    </style>
+</head>
+<body class="bg-[#f9f7f2] max-w-[420px] mx-auto my-3 rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-lg">
+    <!--顶部封面：修正图片地址为github用户SSs01AS仓库c-hao下的图片（基于你提供的原始链接）-->
+    <div>
+        <!-- 注意：原代码中第一个图片地址错误使用了chenchenhaos仓库，现修正为你提供的github.com/SSs01AS/c-hao/blob/main/... 
+             但GitHub blob链接不能直接用于img src，需要转换为raw链接。因此已自动转换为你实际可用的raw地址 -->
+        <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C%20(1).jpg" 
+             alt="陈好专属封面" 
+             class="w-full h-[220px] object-cover"
+             onerror="this.onerror=null;this.src='https://placehold.co/400x220?text=封面加载失败';">
+        <div class="py-3 text-center text-black font-bold text-xl tracking-wider">
+            =☐ω☐= 陈好专属 =☐ω☐=
+        </div>
+    </div>
+
+    <div class="flex">
+        <!--左侧菜单：保持原始结构但优化激活样式-->
+        <div class="w-[35%] bg-[#fff7ef] py-3 px-2 flex flex-col">
+            <div class="font-bold text-lg pl-2 mb-3 border-l-4 border-orange-400">菜单列表</div>
+            <div class="menu-item" data-tab="notice">📌 下单须知</div>
+            <div class="menu-item" data-tab="milk">🥤 点奶茶</div>
+            <div class="menu-item" data-tab="eat">🍚 吃饭</div>
+            <div class="menu-item" data-tab="snack">🍪 吃零食</div>
+            <div class="menu-item text-red-500 mt-3" data-tab="waste">❌ 拒绝浪费</div>
+            <div class="menu-item text-rose-400" data-tab="suggest">❤️ 投诉&介意</div>
+        </div>
+        <!--右侧内容区：正确展示各个菜单对应的图片/内容，图片地址全部修正为你github仓库的raw链接-->
+        <div class="w-[65%] p-3 min-h-[400px] flex flex-col items-center justify-start">
+            <!-- 下单须知 -->
+            <div id="notice" class="content-box text-center w-full">
+                <div class="text-lg font-bold mb-3">📢下单须知</div>
+                <p class="text-gray-600 text-sm">按需点餐，理性消费<br>爱惜粮食，拒绝铺张浪费</p>
+                <div class="mt-4 text-xs text-gray-400">⭐ 陈好专属用餐体验 ⭐</div>
+            </div>
+
+            <!-- 点奶茶：修正图片地址为原链接第三个？你提供第二个图片地址：166c08a5ae17ce.jpg 原本用于奶茶，符合原始设计 -->
+            <div id="milk" class="content-box hidden text-center w-full">
+                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/166c08a5ae17ce.jpg" 
+                     alt="奶茶套餐" 
+                     class="w-[180px] rounded-xl mx-auto shadow-md"
+                     onerror="this.onerror=null;this.src='https://placehold.co/180x180?text=奶茶图加载失败';">
+                <div class="mt-3 font-medium text-gray-800">🥤 招牌奶茶套餐</div>
+                <p class="text-xs text-gray-500 mt-1">香浓丝滑 · 定制甜度</p>
+            </div>
+
+            <!-- 吃饭：修正图片地址为 v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg -->
+            <div id="eat" class="content-box hidden text-center w-full">
+                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg" 
+                     alt="干饭正餐" 
+                     class="w-[180px] rounded-xl mx-auto shadow-md"
+                     onerror="this.onerror=null;this.src='https://placehold.co/180x180?text=餐品图加载失败';">
+                <div class="mt-3 font-medium text-gray-800">🍚 能量正餐</div>
+                <p class="text-xs text-gray-500 mt-1">营养均衡 · 美味管饱</p>
+            </div>
+
+            <!-- 吃零食：修正图片地址为 OIP-C (2).jpg -->
+            <div id="snack" class="content-box hidden text-center w-full">
+                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C%20(2).jpg" 
+                     alt="休闲零食" 
+                     class="w-[180px] rounded-xl mx-auto shadow-md"
+                     onerror="this.onerror=null;this.src='https://placehold.co/180x180?text=零食图加载失败';">
+                <div class="mt-3 font-medium text-gray-800">🍪 休闲零食</div>
+                <p class="text-xs text-gray-500 mt-1">解馋小食 · 快乐加倍</p>
+            </div>
+
+            <!-- 拒绝浪费 -->
+            <div id="waste" class="content-box hidden text-center w-full">
+                <div class="text-red-500 font-bold text-lg">❌ 拒绝浪费</div>
+                <p class="text-sm text-gray-500 mt-2">吃多少点多少，杜绝浪费粮食</p>
+                <div class="mt-4 w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">🌾</div>
+            </div>
+
+            <!-- 投诉&介意 -->
+            <div id="suggest" class="content-box hidden text-center w-full">
+                <div class="text-rose-400 font-bold text-lg">❤️ 投诉&介意反馈</div>
+                <p class="text-sm text-gray-500 mt-2">有任何不满意或建议，随时告诉我们调整～</p>
+                <div class="mt-4 text-rose-300 text-sm">✨ 珍视每一条反馈 ✨</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部小提示 -->
+    <div class="text-center text-[10px] text-gray-400 py-3 border-t border-gray-100">
+        按需点餐 · 陈好专属快乐星球
+    </div>
+
+<script>
+    // 完全修正之前的错误：event 未定义，以及默认高亮初始化
+    function switchTab(tabId) {
+        // 隐藏所有content-box
+        const allContents = document.querySelectorAll('.content-box');
+        allContents.forEach(box => {
+            box.classList.add('hidden');
+        });
+        // 显示选中的内容区域
+        const targetContent = document.getElementById(tabId);
+        if (targetContent) {
+            targetContent.classList.remove('hidden');
+        }
+        
+        // 移除所有菜单项的 active-menu 类
+        const allMenuItems = document.querySelectorAll('.menu-item');
+        allMenuItems.forEach(item => {
+            item.classList.remove('active-menu');
+        });
+        
+        // 根据点击的菜单项添加激活样式 -> 使用 data-tab 属性匹配，但也要兼容事件触发（现在改用主动获取当前点击元素）
+        // 注意：当前我们需要通过事件监听传递element，但为了兼容内联onclick的事件对象，新版本代码采用了data属性 + 统一监听或者保留全局函数
+        // 为确保准确，重写绑定方式：原代码内联 onclick 使用了 switchTab，并且依赖 event.target —— 这种方式容易出错。
+        // 增强：我们不再依赖全局 event，而是采用手动监听，并保留内联onclick同时正确传递 this
+    }
+    
+    // 改进：替换所有内联onclick，使得 active-menu 准确找到点击项。重写更稳健的初始化绑定（移除内联绑定，使用事件委托）
+    // 但为了保持原有html结构但修复错误，最好在DOM加载完毕后重新绑定菜单，避免 event 未定义错误。
+    function initMenuEvents() {
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            // 移除原有可能的内联onclick，统一用事件监听防止event问题
+            const oldOnclick = item.getAttribute('onclick');
+            if (oldOnclick) {
+                item.removeAttribute('onclick'); // 清除内联避免冲突
+            }
+            // 获取对应的 tab id: 从 data-tab 或 文本映射
+            let tabId = item.getAttribute('data-tab');
+            if (!tabId) {
+                // 兼容原本没加data-tab的情况，根据文本内容匹配
+                const text = item.innerText;
+                if (text.includes('下单须知')) tabId = 'notice';
+                else if (text.includes('奶茶')) tabId = 'milk';
+                else if (text.includes('吃饭')) tabId = 'eat';
+                else if (text.includes('零食')) tabId = 'snack';
+                else if (text.includes('拒绝浪费')) tabId = 'waste';
+                else if (text.includes('投诉') || text.includes('介意')) tabId = 'suggest';
+                if (tabId) item.setAttribute('data-tab', tabId);
+            }
+            // 添加点击事件
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const targetTab = this.getAttribute('data-tab');
+                if (targetTab) {
+                    // 调用切换函数
+                    switchToTab(targetTab, this);
+                }
+            });
+        });
+        // 默认激活第一个菜单（下单须知）
+        const defaultMenu = document.querySelector('.menu-item[data-tab="notice"]');
+        if (defaultMenu) {
+            switchToTab('notice', defaultMenu);
+        } else {
+            // 后备: 显示notice, 高亮第一个
+            document.getElementById('notice')?.classList.remove('hidden');
+            const firstMenu = document.querySelector('.menu-item');
+            if (firstMenu) firstMenu.classList.add('active-menu');
+        }
+    }
+    
+    // 核心切换函数，支持传入当前菜单dom
+    function switchToTab(tabId, activeElement) {
+        // 隐藏所有内容区
+        document.querySelectorAll('.content-box').forEach(box => box.classList.add('hidden'));
+        const targetDiv = document.getElementById(tabId);
+        if (targetDiv) targetDiv.classList.remove('hidden');
+        // 移除所有激活样式
+        document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active-menu'));
+        // 为当前点击项添加激活样式
+        if (activeElement) {
+            activeElement.classList.add('active-menu');
+        } else {
+            // fallback：根据 tabId 查找对应菜单项
+            const targetMenuItem = document.querySelector(`.menu-item[data-tab="${tabId}"]`);
+            if (targetMenuItem) targetMenuItem.classList.add('active-menu');
+        }
+    }
+    
+    // 另外修复可能因图片链接错误导致的加载问题（已使用raw.githubusercontent）
+    // 同时为确保所有图片是来自正确github仓库，你提供的原始地址前缀均为SSs01AS/c-hao，故全部修正为raw。
+    // 另外注意第三个图片v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg也存在，第四个OIP-C (2).jpg正确。
+    // 此外需要处理html头部原本第一张封面图片也是使用了错误的chenchenhaos仓库，修正为c-hao下的OIP-C (1).jpg
+    // 至此所有图片地址均指向你的github仓库 https://github.com/SSs01AS/c-hao/tree/main 下的图片文件
+    
+    // 补充移动端触摸优化和内容显示友好性
+    window.addEventListener('DOMContentLoaded', () => {
+        initMenuEvents();
+        // 额外兜底: 检查是否有任何图片加载错误时使用优雅降级
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('error', function(e) {
+                if (!this.dataset.fallback) {
+                    this.dataset.fallback = 'true';
+                    // 可提供默认base64占位或隐藏，但无需过度干预，已经设置onerror占位。
+                }
+            });
+        });
+        // 使右侧内容区在高度较小时可滚动
+        const rightPanel = document.querySelector('.w-\\[65\\%\\]');
+        if (rightPanel) rightPanel.style.overflowY = 'auto';
+    });
+    
+    // 保持全局兼容（若有人调用之前未修正的switchTab，不致报错，重新导向）
+    window.switchTab = function(tabId, clickEvent) {
+        // 废弃旧方法，避免报错，但是新绑定已经覆盖，这里做兼容
+        console.warn("请使用新绑定机制");
+        let activeMenuItem = null;
+        if (clickEvent && clickEvent.target) {
+            activeMenuItem = clickEvent.target.closest('.menu-item');
+        }
+        if (!activeMenuItem) {
+            activeMenuItem = document.querySelector(`.menu-item[data-tab="${tabId}"]`);
+        }
+        if (activeMenuItem) {
+            switchToTab(tabId, activeMenuItem);
+        } else {
+            switchToTab(tabId, null);
+        }
+    };
+    // 最终确保所有图片连接正确性，你提供的原始文件列表：
+    // 1. OIP-C (1).jpg -> 封面图片
+    // 2. 166c08a5ae17ce.jpg -> 奶茶
+    // 3. v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg -> 吃饭
+    // 4. OIP-C (2).jpg -> 零食
+    // 全部已修正并加入错误占位处理。
+    // 另外你提到名字大小写：SSs01AS 仓库名正确，分支 main， raw 链接有效。
+    // 为了额外确保样式细节，菜单hover和激活边界更细腻。
+    // 如果github raw访问受限，加备用文本提示（但基础已满足）
+    
+    // 增加主动修复：对已有的内联onclick做彻底清理，避免冲突。
+    (function cleanInlineOnclicks() {
+        const allMenuDivs = document.querySelectorAll('.menu-item');
+        allMenuDivs.forEach(el => {
+            if (el.hasAttribute('onclick')) {
+                const attrVal = el.getAttribute('onclick');
+                el.removeAttribute('onclick');
+                // 提取tabId从字符串中：例如 switchTab('notice') 提取 notice
+                if (attrVal && attrVal.includes('switchTab')) {
+                    const match = attrVal.match(/switchTab\(['"]([^'"]+)['"]\)/);
+                    if (match && match[1]) {
+                        el.setAttribute('data-tab', match[1]);
+                    }
+                }
+            }
+        });
+        // 第二次确保重新绑定事件以免冲突。
+        if (window.initMenuEvents) {
+            // 但有可能已经绑定过，为了避免重复，先解绑？简单起见，重新初始化前先移除之前的监听器（克隆方式简单粗暴？不推荐，但我们可以直接再次调用initMenuEvents会重复添加）
+            // 更好的: 在initMenuEvents中使用once或者移除原有listener，为了稳健，先去掉所有listener采用替换克隆方式有点重，但我们可以调用init之前解除监听
+            // 简便方法：重新执行initMenuEvents时，会为每个菜单再次添加事件，导致多个。先用标志避免重复。
+            if (!window._menuEventsBound) {
+                window._menuEventsBound = true;
+                initMenuEvents();
+            } else {
+                // 但已经绑过了，为了防止内联残留已经清除，不再重复绑定
+                // 但如果第一次未绑定成功，再做一次补丁
+                const hasListener = document.querySelector('.menu-item')?.getAttribute('listener') ;
+                if (!hasListener) {
+                    initMenuEvents();
+                }
+            }
+        }
+        // 将已经激活样式预设为notice高亮
+        setTimeout(() => {
+            if (!document.querySelector('.menu-item.active-menu')) {
+                const defaultNotice = document.querySelector('.menu-item[data-tab="notice"]');
+                if (defaultNotice) {
+                    switchToTab('notice', defaultNotice);
+                } else {
+                    document.querySelector('.menu-item')?.classList.add('active-menu');
+                    document.getElementById('notice')?.classList.remove('hidden');
+                    document.getElementById('milk')?.classList.add('hidden');
+                    document.getElementById('eat')?.classList.add('hidden');
+                    document.getElementById('snack')?.classList.add('hidden');
+                    document.getElementById('waste')?.classList.add('hidden');
+                    document.getElementById('suggest')?.classList.add('hidden');
+                }
+            }
+        }, 20);
+    })();
+</script>
+</body>
+</html>
