@@ -19,9 +19,9 @@
         .qty-btn:active{transform:scale(0.88);}
     </style>
 </head>
-<body class="bg-[#f9f7f2] max-w-[420px] mx-auto my-3 rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-lg">
+<body class="bg-[#f9f7f2] max-w-[420px] mx-auto my-3 rounded-2xl bg-white border border-gray-200 shadow-lg">
     <!-- ===== 顶部封面 ===== -->
-    <div>
+    <div class="rounded-t-2xl overflow-hidden">
         <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C-1.jpg"
              class="w-full h-[200px] object-cover"
              onerror="this.src='https://placehold.co/400x200?text=陈好专属'">
@@ -66,7 +66,7 @@
                         <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('milk')">← 返回</button>
                         <div class="text-base font-bold">🥤 选奶茶</div>
                     </div>
-                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="text-center text-xs text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
                             <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/Co.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','Co')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
@@ -169,7 +169,7 @@
                         <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('eat')">← 返回</button>
                         <div class="text-base font-bold">🍚 选饭菜</div>
                     </div>
-                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="text-center text-xs text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
                             <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/小炒.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','小炒')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
@@ -263,7 +263,7 @@
                         <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('snack')">← 返回</button>
                         <div class="text-base font-bold">🍪 选零食</div>
                     </div>
-                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="text-center text-xs text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
                             <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/冰淇淋.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','冰淇淋')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
@@ -326,7 +326,7 @@
         </div>
     </div>
 
-    <div class="text-center text-[10px] text-gray-400 py-3 border-t border-gray-100">
+    <div class="text-center text-xs text-gray-400 py-3 border-t border-gray-100">
         按需点餐 · 陈好专属快乐星球
     </div>
 
