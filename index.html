@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>陈好专属点餐</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ffb3ba'/><path d='M26 38h48l-4 24a13 13 0 0 1-13 11H43a13 13 0 0 1-13-11z' fill='%23fff'/><rect x='45' y='24' width='10' height='16' rx='5' fill='%23fff'/><circle cx='72' cy='30' r='6' fill='%23ff8fab' opacity='.8'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         *{font-family:"微软雅黑",sans-serif;}
@@ -11,19 +12,25 @@
         .menu-item:hover{background:#fef0e6;transform:translateX(3px);}
         .active-menu{background:#ffe8d6;color:#ff6b6b;font-weight:bold;border-left:3px solid #ff6b6b;padding-left:8px;}
         .content-box img{max-width:100%;height:auto;margin:0 auto;display:block;border-radius:16px;}
+        body{padding-bottom:86px;}
+        .item-card{transition:0.2s all;}
+        .item-card:active{transform:scale(0.97);}
+        .qty-btn{transition:0.15s all;line-height:1;}
+        .qty-btn:active{transform:scale(0.88);}
     </style>
 </head>
 <body class="bg-[#f9f7f2] max-w-[420px] mx-auto my-3 rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-lg">
-    <!-- 顶部封面：使用正确的图片链接 -->
-    <div>" 
+    <!-- ===== 顶部封面 ===== -->
+    <div>
         <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C-1.jpg"
-             class="w-full h-[220px] object-cover"
-             onerror="this.src='https://placehold.co/400x220?text=陈好专属'">
+             class="w-full h-[200px] object-cover"
+             onerror="this.src='https://placehold.co/400x200?text=陈好专属'">
         <div class="py-3 text-center text-black font-bold text-xl tracking-wider">
             =☐ω☐= 陈好专属 =☐ω☐=
         </div>
     </div>
 
+    <!-- ===== 主体：左菜单 + 右内容 ===== -->
     <div class="flex">
         <!-- 左侧菜单 -->
         <div class="w-[35%] bg-[#fff7ef] py-3 px-2 flex flex-col">
@@ -43,31 +50,268 @@
                 <p class="text-gray-600 text-sm">按需点餐，理性消费<br>爱惜粮食，拒绝铺张浪费</p>
             </div>
 
-            <!-- 点奶茶：使用正确的图片链接 -->
+            <!-- ===== 点奶茶：首图 → 展开 9 种 ===== -->
             <div id="milk" class="content-box hidden text-center w-full">
-                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/166c08a5ae17ce.jpg" 
-                     class="w-[180px] mx-auto shadow-md"
-                     onerror="this.src='https://placehold.co/180x180?text=奶茶'">
-                <div class="mt-3 font-medium">🥤 奶茶套餐</div>
-                <p class="text-xs text-gray-500">香浓丝滑 · 定制甜度</p>
+                <div class="cover-view">
+                    <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/166c08a5ae17ce.jpg"
+                         class="w-[170px] mx-auto shadow-md cursor-pointer"
+                         onclick="showGrid('milk')"
+                         onerror="this.src='https://placehold.co/170x170?text=奶茶'">
+                    <div class="mt-3 font-medium">🥤 奶茶套餐</div>
+                    <p class="text-xs text-gray-500">香浓丝滑 · 定制甜度</p>
+                    <div class="mt-2 text-xs text-orange-400 font-medium">👆 点我查看全部 9 种奶茶</div>
+                </div>
+                <div class="grid-view hidden">
+                    <div class="flex items-center gap-2 mb-2">
+                        <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('milk')">← 返回</button>
+                        <div class="text-base font-bold">🥤 选奶茶</div>
+                    </div>
+                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/Co.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','Co')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">Co</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','Co',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="Co">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','Co',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/古.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','古')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">古</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','古',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="古">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','古',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/喜.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','喜')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">喜</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','喜',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="喜">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','喜',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/奈.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','奈')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">奈</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','奈',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="奈">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','奈',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/星.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','星')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">星</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','星',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="星">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','星',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/点.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','点')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">点</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','点',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="点">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','点',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/瑞.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','瑞')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">瑞</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','瑞',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="瑞">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','瑞',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/蜜.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','蜜')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">蜜</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','蜜',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="蜜">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','蜜',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/奶茶1/道.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('milk','道')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">道</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('milk','道',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="milk" data-name="道">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('milk','道',1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 吃饭：使用正确的图片链接 -->
+            <!-- ===== 吃饭：首图 → 展开 8 种 ===== -->
             <div id="eat" class="content-box hidden text-center w-full">
-                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg" 
-                     class="w-[180px] mx-auto shadow-md"
-                     onerror="this.src='https://placehold.co/180x180?text=正餐'">
-                <div class="mt-3 font-medium">🍚 能量正餐</div>
-                <p class="text-xs text-gray-500">营养均衡 · 美味管饱</p>
+                <div class="cover-view">
+                    <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/v2-c6add65a83a32d6e43fc49aa996b9206_r.jpg"
+                         class="w-[170px] mx-auto shadow-md cursor-pointer"
+                         onclick="showGrid('eat')"
+                         onerror="this.src='https://placehold.co/170x170?text=正餐'">
+                    <div class="mt-3 font-medium">🍚 能量正餐</div>
+                    <p class="text-xs text-gray-500">营养均衡 · 美味管饱</p>
+                    <div class="mt-2 text-xs text-orange-400 font-medium">👆 点我查看全部 8 种饭菜</div>
+                </div>
+                <div class="grid-view hidden">
+                    <div class="flex items-center gap-2 mb-2">
+                        <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('eat')">← 返回</button>
+                        <div class="text-base font-bold">🍚 选饭菜</div>
+                    </div>
+                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/小炒.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','小炒')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">小炒</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','小炒',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="小炒">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','小炒',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/汉堡.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','汉堡')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">汉堡</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','汉堡',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="汉堡">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','汉堡',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/火锅.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','火锅')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">火锅</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','火锅',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="火锅">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','火锅',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/炒饭.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','炒饭')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">炒饭</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','炒饭',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="炒饭">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','炒饭',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/炸食.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','炸食')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">炸食</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','炸食',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="炸食">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','炸食',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/烧菜.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','烧菜')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">烧菜</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','烧菜',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="烧菜">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','烧菜',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/皮蛋.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','皮蛋')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">皮蛋</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','皮蛋',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="皮蛋">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','皮蛋',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/吃饭1/面条.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('eat','面条')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">面条</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('eat','面条',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="eat" data-name="面条">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('eat','面条',1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 吃零食：使用正确的图片链接 -->
+            <!-- ===== 吃零食：首图 → 展开 5 种 ===== -->
             <div id="snack" class="content-box hidden text-center w-full">
-                <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C%20(2).jpg" 
-                     class="w-[180px] mx-auto shadow-md"
-                     onerror="this.src='https://placehold.co/180x180?text=零食'">
-                <div class="mt-3 font-medium">🍪 休闲零食</div>
-                <p class="text-xs text-gray-500">解馋小食 · 快乐加倍</p>
+                <div class="cover-view">
+                    <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/OIP-C%20(2).jpg"
+                         class="w-[170px] mx-auto shadow-md cursor-pointer"
+                         onclick="showGrid('snack')"
+                         onerror="this.src='https://placehold.co/170x170?text=零食'">
+                    <div class="mt-3 font-medium">🍪 休闲零食</div>
+                    <p class="text-xs text-gray-500">解馋小食 · 快乐加倍</p>
+                    <div class="mt-2 text-xs text-orange-400 font-medium">👆 点我查看全部 5 种零食</div>
+                </div>
+                <div class="grid-view hidden">
+                    <div class="flex items-center gap-2 mb-2">
+                        <button class="qty-btn text-sm text-orange-500 border border-orange-200 rounded-full px-3 py-1" onclick="showCover('snack')">← 返回</button>
+                        <div class="text-base font-bold">🍪 选零食</div>
+                    </div>
+                    <div class="text-center text-[11px] text-gray-400 mb-2">点击图片或 + 号加入清单，选好复制订单即可</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/冰淇淋.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','冰淇淋')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">冰淇淋</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('snack','冰淇淋',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="snack" data-name="冰淇淋">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('snack','冰淇淋',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/布丁.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','布丁')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">布丁</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('snack','布丁',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="snack" data-name="布丁">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('snack','布丁',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/水果.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','水果')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">水果</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('snack','水果',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="snack" data-name="水果">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('snack','水果',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/薯片.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','薯片')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">薯片</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('snack','薯片',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="snack" data-name="薯片">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('snack','薯片',1)">+</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 shadow-sm border border-orange-100 item-card">
+                            <img src="https://raw.githubusercontent.com/SSs01AS/c-hao/main/零食1/蛋糕.jpg" class="w-full h-24 object-cover rounded-lg cursor-pointer" onclick="addItem('snack','蛋糕')" onerror="this.onerror=null;this.src='https://placehold.co/200x96?text=图片'">
+                            <div class="text-sm font-medium mt-1 text-center">蛋糕</div>
+                            <div class="flex items-center justify-center gap-1.5 mt-1">
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-100 text-orange-500 font-bold" onclick="changeQty('snack','蛋糕',-1)">−</button>
+                                <span class="qty-num w-5 text-center text-sm font-bold" data-cat="snack" data-name="蛋糕">0</span>
+                                <button class="qty-btn w-6 h-6 rounded-full bg-orange-400 text-white font-bold" onclick="changeQty('snack','蛋糕',1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="waste" class="content-box hidden text-center w-full">
@@ -86,32 +330,178 @@
         按需点餐 · 陈好专属快乐星球
     </div>
 
+    <!-- ===== 底部购物车栏 ===== -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 px-3 pb-3 pointer-events-none">
+        <div class="max-w-[420px] mx-auto pointer-events-auto">
+            <div class="bg-orange-400 text-white rounded-full flex items-center justify-between px-5 py-3 cursor-pointer transition active:scale-95" style="box-shadow:0 8px 24px rgba(255,107,107,0.35)" onclick="openCart()">
+                <span class="font-bold">🧾 已选清单</span>
+                <span class="text-sm">共 <b id="cartCount">0</b> 件</span>
+                <span class="bg-white/30 rounded-full px-3 py-1 text-sm font-medium">查看</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 购物车面板 ===== -->
+    <div id="cartPanel" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="closeCart()"></div>
+        <div class="absolute bottom-0 left-0 right-0">
+            <div class="max-w-[420px] mx-auto bg-[#fffaf3] rounded-t-2xl p-4 pb-6" style="max-height:72vh;overflow:auto">
+                <div class="flex justify-between items-center mb-1">
+                    <div class="text-lg font-bold">🧾 已选清单</div>
+                    <button class="w-8 h-8 rounded-full bg-white border border-gray-200 text-gray-500" onclick="closeCart()">✕</button>
+                </div>
+                <div class="text-right text-xs text-gray-400 mb-2">共 <b id="cartCount2">0</b> 份</div>
+                <div id="cartList"></div>
+                <div class="flex gap-2 mt-4">
+                    <button class="flex-1 border border-gray-300 rounded-xl py-2.5 text-sm text-gray-500" onclick="clearCart()">清空</button>
+                    <button class="flex-1 bg-orange-400 text-white rounded-xl py-2.5 text-sm font-bold" onclick="copyOrder()">📋 复制订单</button>
+                </div>
+                <div class="text-center text-xs text-gray-400 mt-3">选好后点「复制订单」，把清单发给陈好就知道啦～</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 轻提示 ===== -->
+    <div id="toast" class="hidden fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-black/75 text-white text-sm px-4 py-2 rounded-full whitespace-nowrap" style="transition:opacity .2s"></div>
+
     <script>
-        function switchToTab(tabId, activeElement) {
-            document.querySelectorAll('.content-box').forEach(box => box.classList.add('hidden'));
-            document.getElementById(tabId)?.classList.remove('hidden');
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active-menu'));
-            if (activeElement) activeElement.classList.add('active-menu');
+        // ===== 购物车状态（本地记住，刷新不丢） =====
+        var CATS = { milk:'🥤 奶茶', eat:'🍚 吃饭', snack:'🍪 零食' };
+        var cart = {};
+        try { cart = JSON.parse(localStorage.getItem('chao_cart_v1')) || {}; } catch (e) { cart = {}; }
+
+        function saveCart() { try { localStorage.setItem('chao_cart_v1', JSON.stringify(cart)); } catch (e) {} }
+        function getQty(cat, name) { return cart[cat + '|' + name] || 0; }
+        function totalCount() { var t = 0; for (var k in cart) t += cart[k]; return t; }
+
+        function addItem(cat, name) {
+            var key = cat + '|' + name;
+            cart[key] = (cart[key] || 0) + 1;
+            saveCart(); renderQty(cat, name); updateBar(); renderCart();
+            showToast('已加入 ' + name + ' ×' + cart[key]);
+        }
+        function changeQty(cat, name, delta) {
+            var key = cat + '|' + name;
+            cart[key] = (cart[key] || 0) + delta;
+            if (cart[key] <= 0) delete cart[key];
+            saveCart(); renderQty(cat, name); updateBar(); renderCart();
+            showToast(delta > 0 ? ('已加入 ' + name + ' ×' + (cart[key] || 1)) : ('已减少 ' + name));
+        }
+        function renderQty(cat, name) {
+            var key = cat + '|' + name;
+            document.querySelectorAll('.qty-num[data-cat="' + cat + '"][data-name="' + name + '"]').forEach(function (el) {
+                el.textContent = cart[key] || 0;
+            });
+        }
+        function renderAllQty() {
+            document.querySelectorAll('.qty-num').forEach(function (el) {
+                el.textContent = cart[el.getAttribute('data-cat') + '|' + el.getAttribute('data-name')] || 0;
+            });
+        }
+        function updateBar() {
+            var t = totalCount();
+            document.getElementById('cartCount').textContent = t;
+            document.getElementById('cartCount2').textContent = t;
+        }
+        function renderCart() {
+            var list = document.getElementById('cartList');
+            var entries = Object.entries(cart).filter(function (e) { return e[1] > 0; });
+            if (!entries.length) {
+                list.innerHTML = '<div class="text-center text-gray-400 text-sm py-6">还没有选择哦～ 去点点喜欢的吧</div>';
+                return;
+            }
+            var html = '';
+            ['milk', 'eat', 'snack'].forEach(function (cat) {
+                var items = entries.filter(function (e) { return e[0].indexOf(cat + '|') === 0; });
+                if (!items.length) return;
+                html += '<div class="mb-2"><div class="text-sm font-bold text-orange-400 mb-1">' + CATS[cat] + '</div>';
+                items.forEach(function (e) {
+                    html += '<div class="flex justify-between items-center bg-white rounded-lg px-3 py-2 mb-1 border border-orange-100">'
+                        + '<span class="text-sm">' + e[0].split('|')[1] + '</span>'
+                        + '<span class="text-sm font-bold text-orange-500">× ' + e[1] + '</span></div>';
+                });
+                html += '</div>';
+            });
+            list.innerHTML = html;
         }
 
-        document.querySelectorAll('.menu-item').forEach(item => {
-            const text = item.innerText;
-            let tabId = '';
-            if (text.includes('下单须知')) tabId = 'notice';
-            else if (text.includes('奶茶')) tabId = 'milk';
-            else if (text.includes('吃饭')) tabId = 'eat';
-            else if (text.includes('零食')) tabId = 'snack';
-            else if (text.includes('拒绝浪费')) tabId = 'waste';
-            else if (text.includes('投诉') || text.includes('介意')) tabId = 'suggest';
+        // ===== 购物车面板 =====
+        function openCart() { document.getElementById('cartPanel').classList.remove('hidden'); renderCart(); }
+        function closeCart() { document.getElementById('cartPanel').classList.add('hidden'); }
+        function clearCart() { cart = {}; saveCart(); renderAllQty(); updateBar(); renderCart(); showToast('已清空清单'); }
+
+        // ===== 复制订单 =====
+        function copyOrder() {
+            var entries = Object.entries(cart).filter(function (e) { return e[1] > 0; });
+            if (!entries.length) { showToast('还没有选择哦～'); return; }
+            var lines = ['【陈好专属点餐】'];
+            ['milk', 'eat', 'snack'].forEach(function (cat) {
+                var items = entries.filter(function (e) { return e[0].indexOf(cat + '|') === 0; });
+                if (!items.length) return;
+                var part = items.map(function (e) { return e[0].split('|')[1] + '×' + e[1]; }).join('、');
+                lines.push(CATS[cat] + '：' + part);
+            });
+            lines.push('共 ' + totalCount() + ' 份');
+            var text = lines.join('\n');
+            function done() { showToast('订单已复制，发给陈好就知道啦～'); }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+            } else { fallbackCopy(text, done); }
+        }
+        function fallbackCopy(text, done) {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); done(); } catch (e) { showToast('复制失败，请截图发送～'); }
+            document.body.removeChild(ta);
+        }
+
+        // ===== 轻提示 =====
+        var toastTimer = null;
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.textContent = msg; t.classList.remove('hidden');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { t.classList.add('hidden'); }, 1400);
+        }
+
+        // ===== 首图 → 展开图片网格 =====
+        function showGrid(cat) {
+            document.getElementById(cat).querySelector('.cover-view').classList.add('hidden');
+            document.getElementById(cat).querySelector('.grid-view').classList.remove('hidden');
+        }
+        function showCover(cat) {
+            document.getElementById(cat).querySelector('.grid-view').classList.add('hidden');
+            document.getElementById(cat).querySelector('.cover-view').classList.remove('hidden');
+        }
+
+        // ===== 左侧菜单切换 =====
+        function switchToTab(tabId, activeElement) {
+            document.querySelectorAll('.content-box').forEach(function (box) { box.classList.add('hidden'); });
+            var el = document.getElementById(tabId);
+            if (el) el.classList.remove('hidden');
+            document.querySelectorAll('.menu-item').forEach(function (item) { item.classList.remove('active-menu'); });
+            if (activeElement) activeElement.classList.add('active-menu');
+        }
+        document.querySelectorAll('.menu-item').forEach(function (item) {
+            var text = item.innerText;
+            var tabId = '';
+            if (text.indexOf('下单须知') >= 0) tabId = 'notice';
+            else if (text.indexOf('奶茶') >= 0) tabId = 'milk';
+            else if (text.indexOf('吃饭') >= 0) tabId = 'eat';
+            else if (text.indexOf('零食') >= 0) tabId = 'snack';
+            else if (text.indexOf('拒绝浪费') >= 0) tabId = 'waste';
+            else if (text.indexOf('投诉') >= 0 || text.indexOf('介意') >= 0) tabId = 'suggest';
             if (tabId) item.setAttribute('data-tab', tabId);
-            
-            item.addEventListener('click', function() {
-                const targetTab = this.getAttribute('data-tab');
+            item.addEventListener('click', function () {
+                var targetTab = this.getAttribute('data-tab');
                 if (targetTab) switchToTab(targetTab, this);
             });
         });
-        
-        const defaultMenu = document.querySelector('.menu-item[data-tab="notice"]');
+
+        // ===== 初始化 =====
+        renderAllQty(); updateBar(); renderCart();
+        var defaultMenu = document.querySelector('.menu-item[data-tab="notice"]');
         if (defaultMenu) switchToTab('notice', defaultMenu);
     </script>
 </body>
