@@ -443,7 +443,7 @@
             });
             lines.push('共 ' + totalCount() + ' 份');
             var text = lines.join('\n');
-            function done() { showToast('订单已复制，发给陈好就知道啦～'); }
+            function done() { showToast('订单复制，发给罗超就好啦～'); }
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
             } else { fallbackCopy(text, done); }
